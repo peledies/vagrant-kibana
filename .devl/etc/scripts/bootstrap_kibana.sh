@@ -1,15 +1,18 @@
-#! /usr/bin/env bash
+#!/bin/bash
 
 vagrant_build_log=/home/ubuntu/kibana/vm_build.log
 
-echo -e "\n--- Downloading kibana-5.4.0-linux-x86_64.tar.gz ---\n"
-wget https://artifacts.elastic.co/downloads/kibana/kibana-5.4.0-linux-x86_64.tar.gz >> $vagrant_build_log 2>&1
+echo -e "\n--- Installing Kibana ---\n"
 
-echo -e "\n--- Verifying Checksum ---\n"
-sha1sum kibana-5.4.0-linux-x86_64.tar.gz >> $vagrant_build_log 2>&1
+apt-get install -y kibana >> $vagrant_build_log 2>&1
 
-echo -e "\n--- Unpacking Archive ---\n"
-tar -xzf kibana-5.4.0-linux-x86_64.tar.gz --directory /home/ubuntu/kibana/kibana --strip-components=1 >> $vagrant_build_log 2>&1
+echo -e "\n--- Configuring Kibana ---\n"
 
-#start the server
-cd /home/ubuntu/kibana
+sudo sed -i "s/^#server.port/server.port/" /etc/kibana/kibana.yml
+sudo sed -i "s/^#server.host/server.host/" /etc/kibana/kibana.yml
+sudo sed -i "s/^#elasticsearch.url/elasticsearch.url/" /etc/kibana/kibana.yml
+
+echo -e "\n--- Enabling Kibana ---\n"
+
+sudo systemctl enable kibana >> $vagrant_build_log 2>&1
+sudo systemctl start kibana >> $vagrant_build_log 2>&1
