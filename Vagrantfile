@@ -12,6 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # Set up Port Forwarding
   config.vm.network :forwarded_port, host: 8100, guest: 80
+  config.vm.network :forwarded_port, host: 8101, guest: 81
   config.vm.network :forwarded_port, host: 5600, guest: 5601
 
   # Give vagrant box a static IP Address
@@ -51,4 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     s.path = ".devl/etc/scripts/bootstrap_logstash.sh"
   end
 
+  config.vm.provision "shell" do |s|
+    s.path = ".devl/etc/scripts/provision_sample_data.sh"
+  end
 end

@@ -15,6 +15,11 @@ sudo sed -i "s/^#bootstrap.memory_lock/bootstrap.memory_lock/" /etc/elasticsearc
 sudo sed -i "s/^#network.host: 192.168.0.1/network.host: localhost/" /etc/elasticsearch/elasticsearch.yml
 sudo sed -i "s/^#http.port/http.port/" /etc/elasticsearch/elasticsearch.yml
 
+
+sudo sed -i "s/^#cluster.name: my-application/cluster.name: Vagrant Elasticsearch/" /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i "s/^#discovery.zen.ping.unicast.hosts: [\"host1\", \"host2\"]/discovery.zen.ping.multicast.enabled: false/" /etc/elasticsearch/elasticsearch.yml
+#sudo sed -i "s/^#discovery.zen.minimum_master_nodes: 3/index.number_of_replicas: 0/" /etc/elasticsearch/elasticsearch.yml
+
 sudo sed -i "s/^#LimitMEMLOCK/LimitMEMLOCK/" /usr/lib/systemd/system/elasticsearch.service 
 
 sudo sed -i "s/^#MAX_LOCKED_MEMORY/MAX_LOCKED_MEMORY/" /etc/default/elasticsearch 
